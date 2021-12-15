@@ -1,0 +1,36 @@
+name: Convert Gitpod image to stargz
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+  workflow_dispatch:
+
+jobs:
+  stargz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          curl -sSL https://github.com/containerd/nerdctl/releases/download/v0.15.0/nerdctl-full-0.15.0-linux-amd64.tar.gz -o - | sudo tar -xz -C /usr/local
+          sudo systemctl daemon-reload
+          sudo systemctl enable --now containerd
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo ${{ secrets.GHCR_TOKEN }} | sudo nerdctl login --username aledbf --password-stdin ghcr.io
+
+      - name: Pull and convert gitpod/workspace-full image
+        run: |
+          sudo nerdctl pull --quiet gitpod/workspace-full:latest
+          sudo nerdctl image convert \
+            --estargz \
+            --estargz-compression-level=1 \
+            --oci \
+            gitpod/workspace-full:latest ghcr.io/aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+
+      - name: Publish to Github Container Registry
+        run: |
+          sudo nerdctl push ghcr.io/aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
