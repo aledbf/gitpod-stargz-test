@@ -20,7 +20,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         run: |
-          echo ${{ secrets.GHCR_TOKEN }} | sudo nerdctl login --username aledbf --password-stdin ghcr.io
+          echo ${{ secrets.GHCR_TOKEN }} | sudo nerdctl login --username aledbf --password-stdin
 
       - name: Pull and convert gitpod/workspace-full image
         run: |
@@ -29,8 +29,8 @@ jobs:
             --estargz \
             --estargz-compression-level=1 \
             --oci \
-            gitpod/workspace-full:latest ghcr.io/aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+            gitpod/workspace-full:latest aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
 
       - name: Publish to Github Container Registry
         run: |
-          sudo nerdctl push ghcr.io/aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+          sudo nerdctl push aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
