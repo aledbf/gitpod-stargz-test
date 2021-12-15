@@ -1,0 +1,4 @@
+image: ghcr.io/aledbf/gitpod-stargz-test:be6321b3e1c59fe302827b2cdac9464d171b5493-esgz
+
+tasks:
+  - command: echo "Hola stargz"
