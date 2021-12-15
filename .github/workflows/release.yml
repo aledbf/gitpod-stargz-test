@@ -24,13 +24,10 @@ jobs:
 
       - name: Pull and convert gitpod/workspace-full image
         run: |
-          sudo nerdctl pull --quiet gitpod/workspace-full:latest
-          sudo nerdctl image convert \
-            --estargz \
-            --estargz-compression-level=1 \
-            --oci \
-            gitpod/workspace-full:latest aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+          sudo ctr-remote image pull gitpod/workspace-full:latest
+          sudo ctr-remote image optimize --oci gitpod/workspace-full:latest aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+          sudo ctr-remote image push aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
 
       - name: Publish to Github Container Registry
         run: |
-          sudo nerdctl push aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+          sudo ctr-remote image push aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
