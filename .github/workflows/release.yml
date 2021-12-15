@@ -24,9 +24,9 @@ jobs:
 
       - name: Pull and convert gitpod/workspace-full image
         run: |
-          sudo ctr-remote image pull gitpod/workspace-full:latest
-          sudo ctr-remote image optimize --oci gitpod/workspace-full:latest aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
-          sudo ctr-remote image push aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+          sudo ctr-remote image pull docker.io/gitpod/workspace-full:latest
+          sudo ctr-remote image optimize --oci docker.io/gitpod/workspace-full:latest aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
+          sudo ctr-remote image push docker.io/aledbf/gitpod-stargz-test:$GITHUB_SHA-esgz
 
       - name: Publish to Github Container Registry
         run: |
