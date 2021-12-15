@@ -1,4 +1,4 @@
-image: aledbf/gitpod-stargz-test:6e755db359cfa81b898275f44c6057f4ac6afb5a-esgz
+image: aledbf/gitpod-stargz-test:85126193649049bfda6f1dc66c3de3f533466f5a-esgz
 #image: ghcr.io/aledbf/gitpod-stargz-test:be6321b3e1c59fe302827b2cdac9464d171b5493-esgz
 
 tasks:
